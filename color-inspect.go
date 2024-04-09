@@ -34,7 +34,7 @@ func (c Color) Mean() int {
 		return -1
 	}
 
-	return (c.Red + c.Green + c.Blue) / 2
+	return (c.Red + c.Green + c.Blue) / 3
 }
 
 // ColorMode returns "light" if this is a light color, or "dark" if this is a dark color.
@@ -57,29 +57,4 @@ func (c Color) IsDark() bool {
 
 func (c Color) IsLight() bool {
 	return c.ColorMode() == "light"
-}
-
-// ColorModeExt is used to calculate text colors, using pure black or white
-// for medium colors, and blended values for light and dark colors.
-func (c Color) ColorModeExt() string {
-
-	if c.IsEmpty() {
-		return ""
-	}
-
-	mean := c.Mean()
-
-	if mean > 191 {
-		return ColorModeExtLight
-	}
-
-	if mean > 127 {
-		return ColorModeExtMediumLight
-	}
-
-	if mean > 63 {
-		return ColorModeExtMediumDark
-	}
-
-	return ColorModeExtDark
 }

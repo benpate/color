@@ -54,7 +54,7 @@ func (c Color) TextExt() Color {
 
 	mean := c.Mean()
 
-	if mean > 191 {
+	if mean > 177 {
 		return c.Mix(Black, 90)
 	}
 
@@ -62,7 +62,7 @@ func (c Color) TextExt() Color {
 		return Black
 	}
 
-	if mean > 63 {
+	if mean > 77 {
 		return White
 	}
 
