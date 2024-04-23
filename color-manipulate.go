@@ -69,6 +69,17 @@ func (c Color) TextExt() Color {
 	return c.Mix(White, 90)
 }
 
+// Contrast mixes this color with either black or white.  Light colors become darker,
+// and dark colors become lighter.  The percentage determines how much to mix the colors.
+func (c Color) Contrast(percent int) Color {
+
+	if c.Mean() > 127 {
+		return c.Darken(percent)
+	}
+
+	return c.Lighten(percent)
+}
+
 // Darken mixes this color with black, moving towards black by the specified percentage.
 func (c Color) Darken(percent int) Color {
 	return c.Mix(Black, percent)
