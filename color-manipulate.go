@@ -54,7 +54,11 @@ func (c Color) TextExt() Color {
 
 	mean := c.Mean()
 
-	if mean > 177 {
+	if mean > 212 {
+		return c.Mix(Black, 80)
+	}
+
+	if mean > 169 {
 		return c.Mix(Black, 90)
 	}
 
@@ -62,11 +66,15 @@ func (c Color) TextExt() Color {
 		return Black
 	}
 
-	if mean > 77 {
+	if mean > 85 {
 		return White
 	}
 
-	return c.Mix(White, 90)
+	if mean > 42 {
+		return c.Mix(White, 90)
+	}
+
+	return c.Mix(White, 80)
 }
 
 // Contrast mixes this color with either black or white.  Light colors become darker,
