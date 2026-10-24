@@ -4,30 +4,6 @@ package color
  * Color Manipulations
  ******************************************/
 
-// Mix combines this color with another one, moving towards
-// the 'other' color by a specified percentage.  0% will return
-// this color, 100% will return the 'other' color.
-func (c Color) Mix(other any, percent int) Color {
-
-	otherColor := Parse(other)
-
-	if otherColor.IsEmpty() {
-		return c
-	}
-
-	if c.IsEmpty() {
-		return otherColor
-	}
-
-	// Calculate the new color
-	return Color{
-		Red:     mix(c.Red, otherColor.Red, percent),
-		Green:   mix(c.Green, otherColor.Green, percent),
-		Blue:    mix(c.Blue, otherColor.Blue, percent),
-		Opacity: c.Opacity,
-	}
-}
-
 // Text returns either black or white to use as text on top of the current color.
 func (c Color) Text() Color {
 
@@ -96,7 +72,31 @@ func (c Color) Lighten(percent int) Color {
 	return c.Mix(White, percent)
 }
 
-// mix moves color1 toward color2 by percent, clamped to 0-100, and truncates the result
+// Mix combines this color with another one, moving towards
+// the 'other' color by a specified percentage.  0% will return
+// this color, 100% will return the 'other' color.
+func (c Color) Mix(other any, percent int) Color {
+
+	otherColor := Parse(other)
+
+	if otherColor.IsEmpty() {
+		return c
+	}
+
+	if c.IsEmpty() {
+		return otherColor
+	}
+
+	// Calculate the new color
+	return Color{
+		Red:     mix(c.Red, otherColor.Red, percent),
+		Green:   mix(c.Green, otherColor.Green, percent),
+		Blue:    mix(c.Blue, otherColor.Blue, percent),
+		Opacity: c.Opacity,
+	}
+}
+
+// mix moves color1 toward color2 by percent, clamped to 0-100, and rounds to the nearest whole value
 func mix(color1 int, color2 int, percent int) int {
 
 	if percent > 100 {
@@ -105,8 +105,7 @@ func mix(color1 int, color2 int, percent int) int {
 		percent = 0
 	}
 
-	opacity2 := float64(percent) / 100
-	opacity1 := 1 - opacity2
-
-	return int((float64(color1)*opacity1 + float64(color2)*opacity2))
+	// Integer arithmetic is exact, where float weights lost a point to rounding error.
+	// Adding 50 before dividing by 100 rounds to the nearest value, with halves rounding up.
+	return (color1*(100-percent) + color2*percent + 50) / 100
 }

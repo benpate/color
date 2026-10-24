@@ -8,16 +8,6 @@ type Color struct {
 	Opacity float64
 }
 
-// NewColor returns an empty, fully opaque Color
-func NewColor() Color {
-	return Color{
-		Red:     -1, // -1 means this color is empty
-		Green:   -1, // -1 means this color is empty
-		Blue:    -1, // -1 means this color is empty
-		Opacity: 1,  // 1 means this color is fully opaque
-	}
-}
-
 // Parse converts a Color, a *Color, or a hex or rgb()/rgba() string into a Color.
 // Anything else, including a nil *Color, returns an empty Color.
 func Parse(value any) Color {
@@ -46,4 +36,14 @@ func Parse(value any) Color {
 	}
 
 	return NewColor()
+}
+
+// NewColor returns an empty, fully opaque Color
+func NewColor() Color {
+	return Color{
+		Red:     -1, // -1 means this color is empty
+		Green:   -1, // -1 means this color is empty
+		Blue:    -1, // -1 means this color is empty
+		Opacity: 1,  // 1 means this color is fully opaque
+	}
 }
