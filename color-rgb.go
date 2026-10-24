@@ -49,7 +49,14 @@ func ParseRGB(value string) Color {
 // -1 is returned.
 func parseInt(value string) int {
 
-	if result, err := strconv.ParseInt(value, 10, 8); err == nil {
+	// RULE: CSS permits spaces around the separators (`rgb(255, 0, 0)`), and
+	// ParseInt rejects them, so the value must be trimmed before parsing.
+	value = strings.TrimSpace(value)
+
+	// RULE: bitSize must be wide enough for the whole 0-255 channel range.
+	// A bitSize of 8 is SIGNED, so it caps at 127 and fails every bright color.
+	// Range enforcement belongs to isValidInt, not to ParseInt.
+	if result, err := strconv.ParseInt(value, 10, 16); err == nil {
 		resultInt := int(result)
 		if isValidInt(resultInt) {
 			return resultInt
