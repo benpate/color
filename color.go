@@ -1,5 +1,6 @@
 package color
 
+// Color is an RGB color with an opacity. A channel of -1 marks the color as empty.
 type Color struct {
 	Red     int
 	Green   int
@@ -7,6 +8,7 @@ type Color struct {
 	Opacity float64
 }
 
+// NewColor returns an empty, fully opaque Color
 func NewColor() Color {
 	return Color{
 		Red:     -1, // -1 means this color is empty
@@ -16,6 +18,8 @@ func NewColor() Color {
 	}
 }
 
+// Parse converts a Color, a *Color, or a hex or rgb()/rgba() string into a Color.
+// Anything else, including a nil *Color, returns an empty Color.
 func Parse(value any) Color {
 
 	switch typed := value.(type) {
@@ -24,6 +28,12 @@ func Parse(value any) Color {
 		return typed
 
 	case *Color:
+
+		// RULE: A nil pointer is an empty color, not a panic
+		if typed == nil {
+			return NewColor()
+		}
+
 		return *typed
 
 	case string:
