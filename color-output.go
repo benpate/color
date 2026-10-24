@@ -6,6 +6,7 @@ import "strconv"
  * Output
  ******************************************/
 
+// String returns this color as hex when it is fully opaque, as rgba() otherwise, and "" when it is empty
 func (c Color) String() string {
 
 	if c.IsEmpty() {
@@ -19,6 +20,7 @@ func (c Color) String() string {
 	return c.RGBA()
 }
 
+// Hex returns this color as a "#rrggbb" string
 func (c Color) Hex() string {
 	return "#" +
 		formatHex(c.Red) +
@@ -26,6 +28,7 @@ func (c Color) Hex() string {
 		formatHex(c.Blue)
 }
 
+// RGBA returns this color as an "rgba(r,g,b,a)" string
 func (c Color) RGBA() string {
 	return "rgba(" +
 		strconv.Itoa(c.Red) + "," +

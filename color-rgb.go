@@ -5,6 +5,7 @@ import (
 	"strings"
 )
 
+// ParseRGB reads an "rgb(r, g, b)" or "rgba(r, g, b, a)" color
 func ParseRGB(value string) Color {
 
 	result := NewColor()
@@ -23,16 +24,15 @@ func ParseRGB(value string) Color {
 	value = strings.TrimSuffix(value, ")")
 
 	parts := strings.Split(value, ",")
-	partsLen := len(parts)
 
 	if hasOpacity {
-		if partsLen == 4 {
+		if len(parts) == 4 {
 			result.Opacity = parseFloat(parts[3])
 		} else {
 			return result
 		}
 	} else {
-		if partsLen != 3 {
+		if len(parts) != 3 {
 			return result
 		}
 	}
@@ -57,8 +57,7 @@ func parseInt(value string) int {
 	// A bitSize of 8 is SIGNED, so it caps at 127 and fails every bright color.
 	// Range enforcement belongs to isValidInt, not to ParseInt.
 	if result, err := strconv.ParseInt(value, 10, 16); err == nil {
-		resultInt := int(result)
-		if isValidInt(resultInt) {
+		if resultInt := int(result); isValidInt(resultInt) {
 			return resultInt
 		}
 	}

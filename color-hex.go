@@ -5,6 +5,7 @@ import (
 	"strings"
 )
 
+// ParseHex reads a six-digit hex color, with or without its leading "#"
 func ParseHex(value string) Color {
 
 	result := NewColor()
@@ -31,8 +32,7 @@ func ParseHex(value string) Color {
 func parseHex(value string) int {
 
 	if result, err := strconv.ParseInt(value, 16, 64); err == nil {
-		resultInt := int(result)
-		if isValidInt(resultInt) {
+		if resultInt := int(result); isValidInt(resultInt) {
 			return resultInt
 		}
 	}

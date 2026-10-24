@@ -12,7 +12,7 @@ const ColorModeLight = "light"
 // ColorModeDark names a dark color mode
 const ColorModeDark = "dark"
 
-// ColorModeAuto names a color mode that follows the viewer's preference
+// ColorModeAuto names a color mode that is chosen automatically
 const ColorModeAuto = "auto"
 
 // ColorModeExtLight names the lightest of the four extended color modes

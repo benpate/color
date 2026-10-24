@@ -23,8 +23,8 @@ func (c Color) IsEmpty() bool {
 }
 
 // NotEmpty returns TRUE if this color is NOT empty
-func (color Color) NotEmpty() bool {
-	return !color.IsEmpty()
+func (c Color) NotEmpty() bool {
+	return !c.IsEmpty()
 }
 
 // Mean returns the average of the red, green, and blue values.
@@ -51,10 +51,12 @@ func (c Color) ColorMode() string {
 	return "dark"
 }
 
+// IsDark returns TRUE if this color's ColorMode is "dark"
 func (c Color) IsDark() bool {
 	return c.ColorMode() == "dark"
 }
 
+// IsLight returns TRUE if this color's ColorMode is "light"
 func (c Color) IsLight() bool {
 	return c.ColorMode() == "light"
 }

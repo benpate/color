@@ -35,9 +35,7 @@ func (c Color) Text() Color {
 		return c
 	}
 
-	mean := c.Mean()
-
-	if mean > 127 {
+	if mean := c.Mean(); mean > 127 {
 		return Black
 	}
 
@@ -98,6 +96,7 @@ func (c Color) Lighten(percent int) Color {
 	return c.Mix(White, percent)
 }
 
+// mix moves color1 toward color2 by percent, clamped to 0-100, and truncates the result
 func mix(color1 int, color2 int, percent int) int {
 
 	if percent > 100 {
